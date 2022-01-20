@@ -1,3 +1,4 @@
+
 Vehicle = {}
 Vehicle.__index = Vehicle
 
@@ -7,10 +8,14 @@ function Vehicle:create(x, y)
     vehicle.velocity = Vector:create(0, 0)
     vehicle.acceleration = Vector:create(0, 0)
     vehicle.location = Vector:create(x, y)
-    vehicle.r = 5
+    vehicle.r = 2.5
     vehicle.vertices = {0, -vehicle.r * 2, -vehicle.r, vehicle.r * 2, vehicle.r, vehicle.r * 2}
-
-    vehicle.maxSpeed = 0.05
+    width = love.graphics.getWidth()
+    height = love.graphics.getHeight()
+    --vehicle.velocity.x = math.random()
+   -- vehicle.velocity.y = math.random()
+    
+    vehicle.maxSpeed = 0.0001
     vehicle.maxForce = 0.001
     vehicle.theta = 0
 
@@ -47,6 +52,7 @@ function Vehicle:borders()
 end
 
 function Vehicle:draw()
+  
     local theta = self.velocity:heading() + math.pi / 2
     love.graphics.push()
     love.graphics.translate(self.location.x, self.location.y)
@@ -55,13 +61,36 @@ function Vehicle:draw()
     love.graphics.pop()
 end
 
-function Vehicle:follow(flow)
-    local desired = flow:lookup(self.location)
-    if desired:mag() == 0 then
-        return
+function Vehicle:checkCollision(flowMap)
+  flowMap:flowAreaArray
+  for i = 0, 30 do
+    for j = 0, 20 do
+      --TODO сравнить координаты каждой стрелки с машинкой, посмотреть пересекаются ли они, если да то принять меры.
     end
-    desired:mul(self.maxSpeed)
-    local steer = desired -- - self.velocity
-    steer:limit(self.maxForce)
-    self:applyForce(steer)
+  end
+  if self.location.x < -self.r then
+        self.location.x = width + self.r
+    end
+
+    if self.location.y < -self.r then
+        self.location.y = height + self.r
+    end
+
+    if self.location.x > width + self.r then
+        self.location.x = -self.r
+    end
+
+    if self.location.y > height + self.r then
+        self.location.y = -self.r
+    end
 end
+--function Vehicle:follow(flow)
+ -- local desired = flow:lookup(self.location)
+ --   if desired:mag() == 0 then
+ --       return
+ --   end
+ --   desired:mul(self.maxSpeed)
+ --   local steer = desired -- - self.velocity
+  --  steer:limit(self.maxForce)
+ --   self:applyForce(steer)
+--end
