@@ -1,14 +1,14 @@
 FrictionArea = {}
 FrictionArea.__index = FrictionArea
 
-function FrictionArea:create(x, y, isPositive)
+function FrictionArea:create(x, y, radius, force, isPositive)
     local frictionArea = {}
     setmetatable(frictionArea, FrictionArea)
     
     
-    frictionArea.force = 0.0001
+    frictionArea.force = force
     frictionArea.location = Vector:create(x,y)
-    frictionArea.radius = 300
+    frictionArea.radius = radius
     frictionArea.isPositive = isPositive
     
     return frictionArea
@@ -20,7 +20,11 @@ end
 
 function FrictionArea:draw()
   love.graphics.push()
-  love.graphics.setColor(200/255, 100/255, 100/255, 1)
+  if (not self.isPositive) then
+    love.graphics.setColor(200/255, 100/255, 100/255, 1)
+  else
+    love.graphics.setColor(100/255, 200/255, 100/255, 1)
+  end
   love.graphics.circle("fill",self.location.x, self.location.y, self.radius)
   love.graphics.pop()
 end

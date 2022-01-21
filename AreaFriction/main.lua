@@ -11,11 +11,17 @@ function love.load()
     vehicles[i] = Vehicle:create(love.graphics.getWidth() * love.math.random(), love.graphics.getHeight() * love.math.random() )
   end
   
-  frictionArea = FrictionArea:create(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2, false)
+  frictionArea1 = FrictionArea:create(200, love.graphics.getHeight() / 2, 200,0.997, false) --торможение
+  frictionArea2 = FrictionArea:create(800, love.graphics.getHeight() / 2, 300, 1.0015, true) -- ускорение
+  frictionAreas = {}
+  frictionAreas[0] = frictionArea1
+  frictionAreas[1] = frictionArea2
 end
 
 function love.draw()
-  frictionArea:draw()
+  for i = 0, 1 do
+    frictionAreas[i]:draw()
+  end
   for i = 0, numberOfVehicles do
     vehicles[i]:draw()
   end
@@ -25,8 +31,11 @@ function love.update(dt)
   for i = 0, numberOfVehicles do
     vehicles[i]:update()
     vehicles[i]:borders()
+    vehicles[i]:checkCollision(frictionAreas)
   end
-  frictionArea:update()
+  for i = 0, 1 do
+    frictionAreas[i]:update()
+  end
 end
 
 
