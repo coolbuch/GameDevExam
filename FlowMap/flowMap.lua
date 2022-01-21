@@ -11,7 +11,7 @@ function FlowMap:create(x, y)
     flowMap.spriteSize = 24
     flowMap.x = x
     flowMap.y = y
-    for i = 0, x do
+    for i = 0, x do -- создаем массив ячеек
       flowMap.flowAreaArray[i] = {}
       for j = 0, y do
         dir = 0

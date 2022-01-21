@@ -7,10 +7,12 @@ debug = false
 numberOfVehicles = 50
 
 function love.load()
+  -- создаем массив агентов
   vehicles = {}
   for i = 0, numberOfVehicles do
     vehicles[i] = Vehicle:create(love.graphics.getWidth() * love.math.random(), love.graphics.getHeight() * love.math.random() )
   end
+  
   --flowArea = FlowArea:create( love.graphics.getWidth() / 2, love.graphics.getHeight() / 2, 0)
   flowMap = FlowMap:create(30, 20)
 end

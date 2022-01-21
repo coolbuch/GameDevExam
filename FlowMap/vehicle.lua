@@ -66,9 +66,10 @@ function Vehicle:checkCollision(flowMap)
   x = flowMap:getX()
   y = flowMap:getY()
   for i = 0, x do
-    for j = 0, y do
+    for j = 0, y do -- Проверяем находится ли конкретная машинка в области одной из flowArea
       if (self.location.x > array[i][j].location.x) and (self.location.x < array[i][j].location.x + array[i][j].spriteSize) and
       (self.location.y > array[i][j].location.y) and (self.location.y < array[i][j].location.y + array[i][j].spriteSize) then
+        -- проверяем в каком напрвлении действует текущая flowArea и применяем силу 
         if (array[i][j].direction == 0) then
           if (debug) then
            print("Collision with DOWN arrow")
@@ -99,13 +100,3 @@ function Vehicle:checkCollision(flowMap)
   end
 end
 
---function Vehicle:follow(flow)
- -- local desired = flow:lookup(self.location)
- --   if desired:mag() == 0 then
- --       return
- --   end
- --   desired:mul(self.maxSpeed)
- --   local steer = desired -- - self.velocity
-  --  steer:limit(self.maxForce)
- --   self:applyForce(steer)
---end

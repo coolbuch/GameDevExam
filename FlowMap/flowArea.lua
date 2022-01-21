@@ -24,7 +24,7 @@ end
 
 function FlowArea:draw()
   love.graphics.push()
-  if (self.direction == 0) then
+  if (self.direction == 0) then -- в зависимости направления действия, рисуем стрелку 
     love.graphics.draw(arrow_img, self.location.x + self.spriteSize , self.location.y , math.pi / 2)
   end
   if (self.direction == 1) then
