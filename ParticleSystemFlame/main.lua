@@ -15,18 +15,18 @@ function love.load()
   shezlong1_img = love.graphics.newImage("/sprites/shezlong.png")
   shezlong2_img = love.graphics.newImage("/sprites/shezlong.png")
   
-  pSystem = love.graphics.newParticleSystem(img, 15000)
+  pSystem = love.graphics.newParticleSystem(img, 30000)
   -- настройки системы частиц
   pSystem:setParticleLifetime(0.5,1)
   pSystem:setLinearAcceleration(windForce * 3, 0, windForce * 10, 0)
-  pSystem:setSizes(0.3, 0.4, 0.5)
+  pSystem:setSizes(0.2, 0.25, 0.3)
   pSystem:setSizeVariation(1)
   pSystem:setDirection(math.pi * 3/ 2)
   pSystem:setSpeed(75)
   pSystem:setEmissionArea("normal", 15, 5, 0, false)
   --pSystem:setSpin(0, 1)
   pSystem:setColors(237/255, 98/255, 12/255, 1, 242/255, 198/255, 22/255, 1, 1, 1, 1, 1)
-  pSystem:setEmissionRate(3000)
+  pSystem:setEmissionRate(20000)
 end
 
 function love.draw()
