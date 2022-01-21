@@ -7,8 +7,8 @@ function FlowMap:create(x, y)
     local flowMap = {}
     setmetatable(flowMap, FlowMap)
     flowMap.flowAreaArray = {}
-    flowMap.spacing = 14
-    flowMap.spriteSize = 16
+    flowMap.spacing = 16
+    flowMap.spriteSize = 24
     flowMap.x = x
     flowMap.y = y
     for i = 0, x do
@@ -48,6 +48,14 @@ function FlowMap:draw()
   end
 end
 
-function arrayInit(x, y)
-  
+function FlowMap:getArray()
+  return self.flowAreaArray
+end
+
+function FlowMap:getX()
+  return self.x
+end
+
+function FlowMap:getY()
+  return self.y
 end

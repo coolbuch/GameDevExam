@@ -5,18 +5,16 @@ Vehicle.__index = Vehicle
 function Vehicle:create(x, y)
     local vehicle = {}
     setmetatable(vehicle, Vehicle)
-    vehicle.velocity = Vector:create(0, 0)
+    vehicle.velocity = Vector:create(love.math.random() / 5, love.math.random() / 5)
     vehicle.acceleration = Vector:create(0, 0)
     vehicle.location = Vector:create(x, y)
-    vehicle.r = 2.5
+    vehicle.r = 4
     vehicle.vertices = {0, -vehicle.r * 2, -vehicle.r, vehicle.r * 2, vehicle.r, vehicle.r * 2}
     width = love.graphics.getWidth()
     height = love.graphics.getHeight()
-    --vehicle.velocity.x = math.random()
-   -- vehicle.velocity.y = math.random()
     
     vehicle.maxSpeed = 0.0001
-    vehicle.maxForce = 0.001
+    vehicle.maxForce = 0.008
     vehicle.theta = 0
 
     return vehicle
@@ -62,28 +60,45 @@ function Vehicle:draw()
 end
 
 function Vehicle:checkCollision(flowMap)
-  flowMap:flowAreaArray
-  for i = 0, 30 do
-    for j = 0, 20 do
-      --TODO сравнить координаты каждой стрелки с машинкой, посмотреть пересекаются ли они, если да то принять меры.
+  
+  array = flowMap:getArray()
+  
+  x = flowMap:getX()
+  y = flowMap:getY()
+  for i = 0, x do
+    for j = 0, y do
+      if (self.location.x > array[i][j].location.x) and (self.location.x < array[i][j].location.x + array[i][j].spriteSize) and
+      (self.location.y > array[i][j].location.y) and (self.location.y < array[i][j].location.y + array[i][j].spriteSize) then
+        if (array[i][j].direction == 0) then
+          if (debug) then
+           print("Collision with DOWN arrow")
+          end
+          self:applyForce(Vector:create(0, self.maxForce))
+        end
+        if (array[i][j].direction == 1) then
+          if (debug) then
+           print("Collision with LEFT arrow")
+          end
+          self:applyForce(Vector:create(-self.maxForce, 0))
+        end
+        if (array[i][j].direction == 2) then
+          if (debug) then
+           print("Collision with UP arrow")
+          end
+          self:applyForce(Vector:create(0, -self.maxForce))
+        end
+        if (array[i][j].direction == 3) then
+          if (debug) then
+           print("Collision with RIGHT arrow")
+          end
+          self:applyForce(Vector:create(self.maxForce, 0))
+        end
+      end
+      
     end
   end
-  if self.location.x < -self.r then
-        self.location.x = width + self.r
-    end
-
-    if self.location.y < -self.r then
-        self.location.y = height + self.r
-    end
-
-    if self.location.x > width + self.r then
-        self.location.x = -self.r
-    end
-
-    if self.location.y > height + self.r then
-        self.location.y = -self.r
-    end
 end
+
 --function Vehicle:follow(flow)
  -- local desired = flow:lookup(self.location)
  --   if desired:mag() == 0 then
